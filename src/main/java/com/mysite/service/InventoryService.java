@@ -79,7 +79,7 @@ public class InventoryService {
 	@Transactional
 	public void updateInventoryQuantity(final long inventoryId,
 			final int quantity) {
-		if (inventoryId == 0) {
+		if (inventoryId <= 0) {
 			throw new ValidationException("invalid inventory");
 		}
 		final Optional<Inventory> inventory = this.inventoryRepository
@@ -94,8 +94,8 @@ public class InventoryService {
 
 	@Transactional
 	public void deleteInventory(final long inventoryId) {
-		if (inventoryId == 0) {
-			throw new ValidationException("invalid inventory id");
+		if (inventoryId <= 0) {
+			throw new ValidationException("invalid inventory");
 		}
 		this.inventoryRepository.deleteById(inventoryId);
 	}
@@ -103,14 +103,14 @@ public class InventoryService {
 	@Transactional
 	public long createCategory(final Category category) {
 		if(category == null){
-			throw new ValidationException("missing category details");
+			throw new ValidationException("missing category");
 		}
 		return this.categoryRepository.save(category).getId();
 	}
 
 	@Transactional(readOnly = true)
 	// return list of top level categories, and having the whole category tree initialized
-	public List<Category> listCategory() {
+	public List<Category> groupCategories() {
 		// TODO add assumption, wont be more than a hundred for all levels
 
 		// fetch all categories and build the tree programmatically, instead of relying on JPA to fetch the children;
@@ -133,11 +133,14 @@ public class InventoryService {
 			topLevelCategory.setSubCategories(
 					groupByParent.get(topLevelCategory.getId()));
 		}
-		return categories;
+		return topLevelCategories;
 	}
 
 	@Transactional
 	public void deleteCategory(final int categoryId) {
+		if(categoryId <= 0) {
+			throw new ValidationException("invalid category");
+		}
 		this.categoryRepository.deleteById(categoryId);
 	}
 
