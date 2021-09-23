@@ -14,6 +14,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.mysite.entity.Category;
 import com.mysite.repository.CategoryRepository;
+import com.mysite.rest.request.CreateCategoryRequest;
 
 @Service
 public class CategoryService {
@@ -22,11 +23,24 @@ public class CategoryService {
 	private CategoryRepository categoryRepository;
 
 	@Transactional
-	public long createCategory(final Category category) {
-		if(category == null){
+	public long createCategory(final CreateCategoryRequest req) {
+		if(req == null){
 			throw new ValidationException("missing category");
 		}
+		final Category category = convertToEntity(req);
 		return this.categoryRepository.save(category).getId();
+	}
+
+	private Category convertToEntity(final CreateCategoryRequest req) {
+		final Category category = new Category();
+		category.setName(req.getName());
+		final Integer parentId = req.getParent();
+		if(parentId != null) {
+			final Category parent = new Category();
+			parent.setId(parentId);
+			category.setParent(parent);
+		}
+		return category;
 	}
 
 	@Transactional(readOnly = true)

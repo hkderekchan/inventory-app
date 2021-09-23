@@ -17,6 +17,7 @@ import com.mysite.entity.Category;
 import com.mysite.entity.Inventory;
 import com.mysite.repository.CategoryRepository;
 import com.mysite.repository.InventoryRepository;
+import com.mysite.rest.request.CreateInventoryRequest;
 
 @Service
 public class InventoryService {
@@ -30,35 +31,40 @@ public class InventoryService {
 	private InventoryRepository inventoryRepository;
 
 	@Transactional
-	public long createInventory(final Inventory inventory) {
-		this.validateCreateInventoryInputs(inventory);
+	public long createInventory(final CreateInventoryRequest req) {
+		this.validateCreateInventoryInputs(req);
+		final Inventory inventory = convertToEntity(req);
 		return this.inventoryRepository.save(inventory).getId();
 	}
 
-	private void validateCreateInventoryInputs(final Inventory inventory) {
-		if (inventory == null) {
+	private Inventory convertToEntity(final CreateInventoryRequest req) {
+		final Inventory inventory = new Inventory();
+		inventory.setName(req.getName());
+		inventory.setQuantity(req.getQuantity());
+		final Category subCategory = new Category();
+		subCategory.setId(req.getSubCategoryId());
+		inventory.setSubCategory(subCategory);
+		return inventory;
+	}
+
+	private void validateCreateInventoryInputs(final CreateInventoryRequest req) {
+		if (req == null) {
 			throw new ValidationException("missing inventory details");
 		}
 		// TODO add assumption to README for this valid characters
-		this.validateInventoryCategory(inventory.getCategory());
-		this.validateInventoryCategory(inventory.getSubCategory());
+		this.validateInventoryCategory(req.getCategoryId());
+		this.validateInventoryCategory(req.getSubCategoryId());
 		final Optional<Category> subCategory = this.categoryRepository
-				.findById(inventory.getSubCategory().getId());
-		if (!subCategory.isPresent() || (inventory.getCategory().getId() != subCategory.get().getParent()
-				.getId())) {
+				.findById(req.getSubCategoryId());
+		if (!subCategory.isPresent() || (req.getCategoryId() != subCategory.get().getParent().getId())) {
 			throw new ValidationException("invalid category/subcategory pair");
 		}
 	}
 
-	private void validateInventoryCategory(final Category category) {
-		if ((category == null) || (category.getId() == null)) {
+	private void validateInventoryCategory(final Integer categoryId) {
+		if (categoryId == null) {
 			throw new ValidationException("invalid inventory category");
 		}
-	}
-
-	@Transactional(readOnly = true)
-	public List<Inventory> listInventory(final int pageIndex) {
-		return this.listInventory(pageIndex, null);
 	}
 
 	@Transactional(readOnly = true)

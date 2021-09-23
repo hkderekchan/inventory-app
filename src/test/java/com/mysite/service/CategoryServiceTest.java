@@ -14,14 +14,16 @@ import javax.validation.ValidationException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mysite.entity.Category;
 import com.mysite.repository.CategoryRepository;
+import com.mysite.rest.request.CreateCategoryRequest;
 
 @ExtendWith(SpringExtension.class)
 public class CategoryServiceTest {
@@ -32,6 +34,9 @@ public class CategoryServiceTest {
 	@Mock
 	private CategoryRepository categoryRepository;
 
+	@Captor
+	private ArgumentCaptor<Category> categoryCaptor;
+	
 	@Test
 	public void shouldCreateCategory() {
 		
@@ -42,14 +47,16 @@ public class CategoryServiceTest {
 			assertEquals("missing category", ex.getMessage());
 		}
 		
-		final Category category = new Category();
-		category.setName("Clothes");
+		final CreateCategoryRequest req = new CreateCategoryRequest();
+		req.setName("Clothes");
 		final Category saved = new Category();
-		BeanUtils.copyProperties(category, saved);
+		saved.setName(req.getName());
 		saved.setId(99);
-		when(categoryRepository.save(category)).thenReturn(saved);
-		service.createCategory(category);
-		verify(categoryRepository, times(1)).save(category);
+		when(categoryRepository.save(any(Category.class))).thenReturn(saved);
+
+		service.createCategory(req);
+		verify(categoryRepository, times(1)).save(categoryCaptor.capture());
+		assertEquals(req.getName(), categoryCaptor.getValue().getName());
 	}
 
 	private Category category(final int id, final String name, final Integer parentId) {

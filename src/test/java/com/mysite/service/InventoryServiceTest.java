@@ -20,7 +20,6 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -29,6 +28,7 @@ import com.mysite.entity.Category;
 import com.mysite.entity.Inventory;
 import com.mysite.repository.CategoryRepository;
 import com.mysite.repository.InventoryRepository;
+import com.mysite.rest.request.CreateInventoryRequest;
 
 // TODO check test coverage
 @ExtendWith(SpringExtension.class)
@@ -56,47 +56,33 @@ public class InventoryServiceTest {
 		}
 	}
 
-	@Test
 	public void shouldFailToCreateInventoryIfInvalidCategory() {
 
-		final Inventory inventory = new Inventory();
+		final CreateInventoryRequest req = new CreateInventoryRequest();
 		try {
-			this.service.createInventory(inventory);
+			this.service.createInventory(req);
 			fail("should fail with missing category");
 		} catch (final ValidationException ex) {
 			assertEquals("invalid inventory category", ex.getMessage());
 		}
 
 		try {
-			inventory.setCategory(new Category());
-			inventory.setSubCategory(new Category());
-			this.service.createInventory(inventory);
-			fail("should fail with missing category");
-		} catch (final ValidationException ex) {
-			assertEquals("invalid inventory category", ex.getMessage());
-		}
-
-		try {
-			inventory.setCategory(this.category(1));
-			final Category subCategory = this.category(2);
-			subCategory.setParent(this.category(3));
-			inventory.setSubCategory(subCategory);
+			req.setCategoryId(1);;
+			req.setSubCategoryId(2);
 			when(this.categoryRepository
 					.findById(eq(2))).thenReturn(Optional.empty());
-			this.service.createInventory(inventory);
+			this.service.createInventory(req);
 			fail("should fail with invalid category/subcategory pair");
 		} catch (final ValidationException ex) {
 			assertEquals("invalid category/subcategory pair", ex.getMessage());
 		}
 
 		try {
-			inventory.setCategory(this.category(1));
 			final Category subCategory = this.category(2);
 			subCategory.setParent(this.category(3));
-			inventory.setSubCategory(subCategory);
 			when(this.categoryRepository
 					.findById(eq(2))).thenReturn(Optional.of(subCategory));
-			this.service.createInventory(inventory);
+			this.service.createInventory(req);
 			fail("should fail with invalid category/subcategory pair");
 		} catch (final ValidationException ex) {
 			assertEquals("invalid category/subcategory pair", ex.getMessage());
@@ -117,18 +103,18 @@ public class InventoryServiceTest {
 		final Category subCategory = this.category(2);
 		subCategory.setParent(category);
 
-		final Inventory inventory = new Inventory();
-		inventory.setCategory(category);
-		inventory.setSubCategory(subCategory);
-		when(this.categoryRepository.findById(eq(2)))
-		.thenReturn(Optional.of(subCategory));
+		final CreateInventoryRequest req = new CreateInventoryRequest();
+		req.setCategoryId(1);
+		req.setSubCategoryId(2);
+
+		when(this.categoryRepository.findById(eq(2))).thenReturn(Optional.of(subCategory));
 		// mock successful save
 		final Inventory saved = new Inventory();
-		BeanUtils.copyProperties(inventory, saved);
+		saved.setCategory(category);
+		saved.setSubCategory(subCategory);
 		saved.setId(99L);
-		when(this.inventoryRepository.save(any(Inventory.class)))
-		.thenReturn(saved);
-		this.service.createInventory(inventory);
+		when(this.inventoryRepository.save(any(Inventory.class))).thenReturn(saved);
+		this.service.createInventory(req);
 
 		verify(this.inventoryRepository, times(1)).save(any(Inventory.class));
 	}
@@ -140,7 +126,7 @@ public class InventoryServiceTest {
 		when(this.inventoryRepository.findByCategory(
 				anyInt(), any(Pageable.class))).thenReturn(page);
 		
-		this.service.listInventory(3);
+		this.service.listInventory(3, null);
 		verify(this.inventoryRepository, times(1)).findByCategory(integerCaptor.capture(),  any(Pageable.class));
 		assertEquals(0, integerCaptor.getValue(), "no category specified, default is 0");
 		

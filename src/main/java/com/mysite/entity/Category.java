@@ -14,7 +14,10 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +26,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Category {
 
 	@Id
@@ -35,10 +37,12 @@ public class Category {
 	@Column(nullable = false, length = 255)
 	private String name;
 
+	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany(mappedBy = "parent")
 	@Fetch(FetchMode.SELECT)
 	private Collection<Category> subCategories;
 
+	@JsonIgnore
 	@ManyToOne
 	@Fetch(FetchMode.SELECT)
 	private Category parent;
