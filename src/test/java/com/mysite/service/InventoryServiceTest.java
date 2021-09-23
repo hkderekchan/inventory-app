@@ -2,7 +2,7 @@ package com.mysite.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,15 +13,25 @@ import java.util.Optional;
 import javax.validation.ValidationException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mysite.entity.Category;
 import com.mysite.entity.Inventory;
 import com.mysite.repository.CategoryRepository;
 import com.mysite.repository.InventoryRepository;
 
+// TODO check test coverage
+@ExtendWith(SpringExtension.class)
 public class InventoryServiceTest {
 
 	@InjectMocks
@@ -33,6 +43,9 @@ public class InventoryServiceTest {
 	@Mock
 	private InventoryRepository inventoryRepository;
 
+	@Captor
+	private ArgumentCaptor<Integer> integerCaptor;
+	
 	@Test
 	public void shouldFailToCreateInventoryIfNull() {
 		try {
@@ -123,11 +136,34 @@ public class InventoryServiceTest {
 	@Test
 	public void shouldFindInventoryByCategory() {
 
+		final Page<Inventory> page = Mockito.mock(Page.class);
+		when(this.inventoryRepository.findByCategory(
+				anyInt(), any(Pageable.class))).thenReturn(page);
+		
+		this.service.listInventory(3);
+		verify(this.inventoryRepository, times(1)).findByCategory(integerCaptor.capture(),  any(Pageable.class));
+		assertEquals(0, integerCaptor.getValue(), "no category specified, default is 0");
+		
+		this.service.listInventory(3, 5);
+		verify(this.inventoryRepository, times(2)).findByCategory(integerCaptor.capture(),  any(Pageable.class));
+		assertEquals(5, integerCaptor.getValue());
 	}
 
 	@Test
 	public void shouldUpdateInventoryQuantity() {
 
+		try {			
+			service.updateInventoryQuantity(0, 3);
+		}catch(ValidationException ex) {
+			assertEquals("invalid inventory", ex.getMessage());
+		}
+		
+		final Inventory inventory = Mockito.mock(Inventory.class);		
+		when(this.inventoryRepository.findById(eq(1L))).thenReturn(Optional.of(inventory));
+		service.updateInventoryQuantity(1, 3);
+		
+		verify(inventory, times(1)).setQuantity(eq(3));
+		verify(inventoryRepository, times(1)).save(eq(inventory));
 	}
 
 	@Test

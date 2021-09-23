@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -70,16 +71,14 @@ public class InventoryService {
 		// TODO dont need to prefetch category name, coz ui should get these reference data, add test for this
 		final Pageable paging = PageRequest.of(pageIndex, DEFAULT_PAGESIZE,
 				Sort.by("name", "id"));
-		return this.inventoryRepository.findByCategory(
-				categoryId == null ? 0 : categoryId, paging).toList();
+		final Page<Inventory> page = this.inventoryRepository.findByCategory(
+				categoryId == null ? 0 : categoryId, paging);
+		return page.toList();
 	}
 
 	@Transactional
 	public void updateInventoryQuantity(final long inventoryId,
 			final int quantity) {
-		if (quantity == 0) {
-			throw new ValidationException("invalid update quantity");
-		}
 		if (inventoryId == 0) {
 			throw new ValidationException("invalid inventory");
 		}
