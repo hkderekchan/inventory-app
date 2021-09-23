@@ -1,7 +1,5 @@
 package com.mysite.rest;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -15,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysite.entity.Category;
 import com.mysite.rest.request.CreateCategoryRequest;
-import com.mysite.rest.response.CreateInventoryResponse;
+import com.mysite.rest.response.CreateCategoryResponse;
+import com.mysite.rest.response.GetCategoriesResponse;
 import com.mysite.service.CategoryService;
 
 @RestController
@@ -30,14 +28,14 @@ public class CategoryResource {
 	private CategoryService service;
 	
 	@PostMapping("/categories")
-	public CreateInventoryResponse createCategory(@Valid @RequestBody final CreateCategoryRequest req) {
-		final long id = service.createCategory(req);
-		return new CreateInventoryResponse(id);
+	public CreateCategoryResponse createCategory(@Valid @RequestBody final CreateCategoryRequest req) {
+		final int id = service.createCategory(req);
+		return new CreateCategoryResponse(id);
 	}
 	
 	@GetMapping("/categories")
-	public List<Category> listCategories(){
-		return service.groupCategories();
+	public GetCategoriesResponse listCategories(){
+		return new GetCategoriesResponse(service.groupCategories());
 	}
 	
 	@DeleteMapping("/categories/{id}")

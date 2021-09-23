@@ -23,7 +23,7 @@ public class CategoryService {
 	private CategoryRepository categoryRepository;
 
 	@Transactional
-	public long createCategory(final CreateCategoryRequest req) {
+	public int createCategory(final CreateCategoryRequest req) {
 		if(req == null){
 			throw new ValidationException("missing category");
 		}
