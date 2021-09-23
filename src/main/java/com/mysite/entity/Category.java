@@ -4,8 +4,11 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +32,7 @@ import lombok.Setter;
 public class Category {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Pattern(regexp = "[0-9a-zA-Z\\- ]+")
@@ -44,6 +47,7 @@ public class Category {
 
 	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_parent_category"))
 	@Fetch(FetchMode.SELECT)
 	private Category parent;
 

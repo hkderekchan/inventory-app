@@ -2,7 +2,9 @@ package com.mysite.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +28,7 @@ import lombok.Setter;
 public class Inventory {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Pattern(regexp = "[0-9a-zA-Z\\- ]+")
@@ -37,7 +39,7 @@ public class Inventory {
 	@Transient
 	private Category category;
 
-	@JoinColumn(name = "belong_to", nullable = false)
+	@JoinColumn(name = "belong_to", nullable = false, foreignKey = @ForeignKey(name = "fk_inventory_category"))
 	@ManyToOne(optional = false)
 	@Fetch(FetchMode.SELECT)
 	private Category subCategory;

@@ -133,11 +133,8 @@ public class InventoryRepositoryTest extends AbstractJpaTest {
 		final Category category = this.createTwoLevelCategory();
 		this.flushAndClear();
 
-		final Inventory inventory = new Inventory();
-		inventory.setSubCategory(category);
-		inventory.setQuantity(0);
-
 		try {
+			final Inventory inventory = inventory(category, null, 0);
 			this.inventoryRepository.save(inventory);
 			this.flushAndClear();
 			fail("missing name, shouldnt pass");
@@ -146,7 +143,7 @@ public class InventoryRepositoryTest extends AbstractJpaTest {
 		}
 
 		try {
-			inventory.setName("??");
+			final Inventory inventory = inventory(category, "??", 0);
 			this.inventoryRepository.save(inventory);
 			this.flushAndClear();
 			fail("invalid pattern, shouldnt pass");
@@ -161,11 +158,9 @@ public class InventoryRepositoryTest extends AbstractJpaTest {
 		final Category category = this.createTwoLevelCategory();
 		this.flushAndClear();
 
-		final Inventory inventory = new Inventory();
-		inventory.setSubCategory(category);
-		inventory.setName("Paul Smith Shorts");
 
 		try {
+			final Inventory inventory = inventory(category, "Paul Smith Shorts", null);
 			this.inventoryRepository.save(inventory);
 			this.flushAndClear();
 			fail("missing quantity, shouldnt pass");
@@ -174,6 +169,7 @@ public class InventoryRepositoryTest extends AbstractJpaTest {
 		}
 
 		try {
+			final Inventory inventory = inventory(category, "Paul Smith Shorts", null);
 			inventory.setQuantity(-1);
 			this.inventoryRepository.save(inventory);
 			this.flushAndClear();
@@ -182,6 +178,14 @@ public class InventoryRepositoryTest extends AbstractJpaTest {
 			this.expectConstraint(ex, "quantity", "constraints.PositiveOrZero");
 		}
 
+	}
+
+	private Inventory inventory(final Category category, final String name, Integer quantity) {
+		final Inventory inventory = new Inventory();
+		inventory.setSubCategory(category);
+		inventory.setName(name);
+		inventory.setQuantity(quantity);
+		return inventory;
 	}
 
 }

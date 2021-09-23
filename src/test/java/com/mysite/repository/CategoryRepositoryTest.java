@@ -92,8 +92,8 @@ public class CategoryRepositoryTest extends AbstractJpaTest {
 	@Test
 	public void shouldFailToPersistForInvalidName() {
 
-		final Category category = new Category();
 		try {
+			final Category category = new Category();
 			this.categoryRepository.save(category);
 			this.flushAndClear();
 			fail("missing name, shouldnt pass");
@@ -102,6 +102,7 @@ public class CategoryRepositoryTest extends AbstractJpaTest {
 		}
 
 		try {
+			final Category category = new Category();
 			category.setName("??");
 			this.categoryRepository.save(category);
 			this.flushAndClear();
