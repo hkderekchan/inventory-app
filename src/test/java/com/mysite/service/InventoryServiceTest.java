@@ -110,7 +110,6 @@ public class InventoryServiceTest {
 		when(this.categoryRepository.findById(eq(2))).thenReturn(Optional.of(subCategory));
 		// mock successful save
 		final Inventory saved = new Inventory();
-		saved.setCategory(category);
 		saved.setSubCategory(subCategory);
 		saved.setId(99L);
 		when(this.inventoryRepository.save(any(Inventory.class))).thenReturn(saved);
