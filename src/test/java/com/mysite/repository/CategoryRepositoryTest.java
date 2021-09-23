@@ -11,13 +11,11 @@ import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Sort;
 
 import com.mysite.entity.Category;
 
 // TODO prepare raml
-@DataJpaTest
 public class CategoryRepositoryTest extends AbstractJpaTest {
 
 	@Autowired
