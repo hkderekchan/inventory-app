@@ -13,7 +13,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Immutable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +24,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Immutable
 public class Category {
 
 	@Id

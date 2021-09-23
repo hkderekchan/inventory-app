@@ -1,28 +1,25 @@
 package com.mysite.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mysite.entity.Category;
 import com.mysite.entity.Inventory;
 
 // TODO prepare schema.sql + data.sql
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class InventoryRepositoryTest extends AbstractJpaTest {
 
@@ -104,33 +101,17 @@ public class InventoryRepositoryTest extends AbstractJpaTest {
 	}
 
 	@Test
-	// TODO this is failure, dont know why
 	public void shouldUpdateQuantity() {
-		final Inventory saved = this.createInventory("Paul Smith Shorts",
-				this.createTwoLevelCategory());
-		System.out.println("~~~ " + saved.getId());
-		this.flushAndClear();
-		this.inventoryRepository.flush();
-		// final Inventory update = this.inventoryRepository
-		// .findById(saved.getId()).get();
-		// System.out.println("... " + saved.getId());
-		// System.out.println("... " + saved.getName());
-		// assertEquals(0, update.getQuantity().intValue());
-		// update.setQuantity(3);
-		// update.setName("xxx");
-		saved.setQuantity(3);
-		saved.setName("yyy");
-		// final Inventory u2 = this.inventoryRepository.saveAndFlush(saved);
-		// System.out.println(">>> " + u2.getQuantity());
-		// System.out.println(">>> " + u2.getName());
-		// this.flushAndClear();
-		// this.flushAndClear();
-		this.inventoryRepository.save(saved);
+		final Inventory saved = this.createInventory("Paul Smith Shorts", this.createTwoLevelCategory());
 		this.flushAndClear();
 
-		final Inventory updated = this.inventoryRepository
-				.findById(saved.getId()).get();
-		System.out.println("!!! " + updated.getName());
+		final Inventory update = this.inventoryRepository.findById(saved.getId()).get();
+		assertEquals(0, update.getQuantity().intValue());
+		update.setQuantity(3);
+		this.inventoryRepository.save(update);
+		this.flushAndClear();
+
+		final Inventory updated = this.inventoryRepository.findById(saved.getId()).get();
 		assertEquals(3, updated.getQuantity().intValue());
 	}
 

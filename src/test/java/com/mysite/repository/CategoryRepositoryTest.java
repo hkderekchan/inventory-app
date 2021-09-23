@@ -1,25 +1,22 @@
 package com.mysite.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collection;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mysite.entity.Category;
 
 // TODO prepare raml
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class CategoryRepositoryTest extends AbstractJpaTest {
 
