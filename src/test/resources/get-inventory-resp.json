@@ -1,0 +1,11 @@
+{
+    "inventory": [
+        {
+            "id": 1,
+            "name": "Potato Chips",
+            "quantity": 99,
+            "subCategoryId": 3,
+            "categoryId": 2
+        }
+    ]
+}

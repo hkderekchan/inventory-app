@@ -15,7 +15,7 @@ import com.mysite.rest.response.CreateCategoryResponse;
 public class CategoryResourceTest extends AbstractIntegrationTest{
 
 	@Test
-	public void shouldGetDefaultCategories() throws Exception {
+	public void shouldListCategories() throws Exception {
 
 		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		final ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/v1/categories"), HttpMethod.GET,

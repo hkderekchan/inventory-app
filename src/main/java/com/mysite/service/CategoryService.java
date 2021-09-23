@@ -64,6 +64,7 @@ public class CategoryService {
 			}
 		}
 		// TDDO add to readme; db schema supports multi level categories but here, we assume 2 levels first
+		// TODO make it support multi level properly
 		for (final Category topLevelCategory : topLevelCategories) {
 			topLevelCategory.setSubCategories(
 					groupByParent.get(topLevelCategory.getId()));

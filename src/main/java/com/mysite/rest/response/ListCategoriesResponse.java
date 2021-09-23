@@ -11,11 +11,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GetCategoriesResponse {
+public class ListCategoriesResponse {
 
 	private List<Category> categories;
 	
-	public GetCategoriesResponse(List<Category> categories) {
+	public ListCategoriesResponse(List<Category> categories) {
 		this.categories = categories;
 	}
 	

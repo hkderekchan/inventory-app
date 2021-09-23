@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.rest.response.CreateCategoryResponse;
-import com.mysite.rest.response.GetCategoriesResponse;
+import com.mysite.rest.response.ListCategoriesResponse;
 import com.mysite.service.CategoryService;
 
 @RestController
@@ -34,8 +34,8 @@ public class CategoryResource {
 	}
 	
 	@GetMapping("/categories")
-	public GetCategoriesResponse listCategories(){
-		return new GetCategoriesResponse(service.groupCategories());
+	public ListCategoriesResponse listCategories(){
+		return new ListCategoriesResponse(service.groupCategories());
 	}
 	
 	@DeleteMapping("/categories/{id}")

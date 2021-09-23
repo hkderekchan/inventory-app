@@ -1,7 +1,5 @@
 package com.mysite.rest;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -18,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysite.entity.Inventory;
 import com.mysite.rest.request.CreateInventoryRequest;
 import com.mysite.rest.request.UpdateInventoryRequest;
 import com.mysite.rest.response.CreateInventoryResponse;
+import com.mysite.rest.response.ListInventoryResponse;
 import com.mysite.service.InventoryService;
 
 @RestController
@@ -40,9 +38,9 @@ public class InventoryResource {
 	}
 	
 	@GetMapping("/inventory")
-	public List<Inventory> listInventory(@RequestParam @PositiveOrZero final Integer pageIndex, 
+	public ListInventoryResponse listInventory(@RequestParam @PositiveOrZero final Integer pageIndex, 
 			@RequestParam(required=false) @Positive final Integer categoryId){
-		return service.listInventory(pageIndex, categoryId);
+		return new ListInventoryResponse(service.listInventory(pageIndex, categoryId));
 	}
 	
 	@PatchMapping("/inventory/{id}")
