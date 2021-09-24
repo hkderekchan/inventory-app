@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +32,7 @@ public class InventoryService {
 	private InventoryRepository inventoryRepository;
 
 	@Transactional
+	@CacheEvict(value = "inventory", allEntries = true)
 	public long createInventory(final CreateInventoryRequest req) {
 		this.validateCreateInventoryInputs(req);
 		final Inventory inventory = convertToEntity(req);
@@ -67,6 +70,7 @@ public class InventoryService {
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable("inventory")
 	public Page<Inventory> listInventory(final int pageIndex,
 			final Integer categoryId) {
 		// TODO add to README for sortBy & pageIndex, and default page size
@@ -78,6 +82,7 @@ public class InventoryService {
 	}
 
 	@Transactional
+	@CacheEvict(value = "inventory", allEntries = true)
 	public void updateInventoryQuantity(final long inventoryId,
 			final int quantity) {
 		if (inventoryId <= 0) {
@@ -94,6 +99,7 @@ public class InventoryService {
 	}
 
 	@Transactional
+	@CacheEvict(value = "inventory", allEntries = true)
 	public void deleteInventory(final long inventoryId) {
 		if (inventoryId <= 0) {
 			throw new ValidationException("invalid inventory");

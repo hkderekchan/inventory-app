@@ -23,8 +23,8 @@ public class InventoryResourceIntegrationTest extends AbstractIntegrationTest{
 	@Order(1)
 	public void shouldListInventory() throws Exception {
 
-		final String inventory = read("get-inventory-resp.json");
-		JSONAssert.assertEquals(inventory, getInventoryList(), false);
+		final String expected = read("get-inventory-resp.json");
+		JSONAssert.assertEquals(expected, getInventoryList(), false);
 	}
 
 	@Test
@@ -38,8 +38,8 @@ public class InventoryResourceIntegrationTest extends AbstractIntegrationTest{
 				HttpMethod.PATCH, entity, String.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		
-		final String categories = read("get-inventory-resp-after-update.json");
-		JSONAssert.assertEquals(categories, getInventoryList(), false);
+		final String expected = read("get-inventory-resp-after-update.json");
+		JSONAssert.assertEquals(expected, getInventoryList(), false);
 	}
 
 	@Test
@@ -71,8 +71,7 @@ public class InventoryResourceIntegrationTest extends AbstractIntegrationTest{
 		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		final ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/v1/inventory?pageIndex=0"), HttpMethod.GET,
 				entity, String.class);
-		String body = response.getBody();
-		return body;
+		return response.getBody();
 	}
 
 	private CreateInventoryRequest inventory(final String name, final int quantity, final int categoryId, final int subCategoryId) {
