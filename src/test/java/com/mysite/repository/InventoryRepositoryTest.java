@@ -18,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import com.mysite.entity.Category;
 import com.mysite.entity.Inventory;
 
-// TODO handle error response
 public class InventoryRepositoryTest extends AbstractJpaTest {
 
 	@Autowired

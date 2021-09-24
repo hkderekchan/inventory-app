@@ -1,6 +1,5 @@
 package com.mysite.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.ValidationException;
@@ -68,15 +67,14 @@ public class InventoryService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Inventory> listInventory(final int pageIndex,
+	public Page<Inventory> listInventory(final int pageIndex,
 			final Integer categoryId) {
 		// TODO add to README for sortBy & pageIndex, and default page size
 		// TODO dont need to prefetch category name, coz ui should get these reference data, add test for this
 		final Pageable paging = PageRequest.of(pageIndex, DEFAULT_PAGESIZE,
 				Sort.by("name", "id"));
-		final Page<Inventory> page = this.inventoryRepository.findByCategory(
+		return this.inventoryRepository.findByCategory(
 				categoryId == null ? 0 : categoryId, paging);
-		return page.toList();
 	}
 
 	@Transactional

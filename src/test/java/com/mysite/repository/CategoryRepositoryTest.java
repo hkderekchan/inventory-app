@@ -15,7 +15,6 @@ import org.springframework.data.domain.Sort;
 
 import com.mysite.entity.Category;
 
-// TODO prepare raml
 public class CategoryRepositoryTest extends AbstractJpaTest {
 
 	@Autowired

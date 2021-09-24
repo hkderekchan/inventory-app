@@ -3,7 +3,7 @@
         {
             "id": 1,
             "name": "Potato Chips",
-            "quantity": 99,
+            "quantity": 88,
             "categoryId": 2,
             "subCategoryId": 3
         }

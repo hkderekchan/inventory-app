@@ -56,6 +56,7 @@ public class InventoryServiceTest {
 		}
 	}
 
+	@Test
 	public void shouldFailToCreateInventoryIfInvalidCategory() {
 
 		final CreateInventoryRequest req = new CreateInventoryRequest();

@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -26,6 +28,11 @@ abstract class AbstractIntegrationTest {
 
 	protected HttpHeaders headers = new HttpHeaders();
 
+	@BeforeEach
+	public void setup() {
+		restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+	}
+	
 	protected String read(String file) throws IOException {
 		final File resource = new ClassPathResource(file).getFile();
 		return new String(Files.readAllBytes(resource.toPath()));

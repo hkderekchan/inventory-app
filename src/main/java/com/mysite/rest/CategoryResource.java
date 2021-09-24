@@ -5,12 +5,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mysite.rest.request.CreateCategoryRequest;
@@ -22,12 +25,14 @@ import com.mysite.service.CategoryService;
 @RequestMapping({
 	"/api/v1"
 })
+@Validated
 public class CategoryResource {
 
 	@Autowired
 	private CategoryService service;
 	
 	@PostMapping("/categories")
+	@ResponseStatus(HttpStatus.CREATED)
 	public CreateCategoryResponse createCategory(@Valid @RequestBody final CreateCategoryRequest req) {
 		final int id = service.createCategory(req);
 		return new CreateCategoryResponse(id);
@@ -39,7 +44,7 @@ public class CategoryResource {
 	}
 	
 	@DeleteMapping("/categories/{id}")
-	public void deleteInventory(@PathVariable @Positive @NotNull final Integer id) {
+	public void deleteCategory(@PathVariable @Positive @NotNull final Integer id) {
 		service.deleteCategory(id);
 	}
 	

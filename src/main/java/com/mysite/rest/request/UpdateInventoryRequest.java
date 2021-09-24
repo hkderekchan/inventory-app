@@ -12,8 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UpdateInventoryRequest {
 
-	private Long id;
-
 	@PositiveOrZero
 	@NotNull
 	private Integer quantity;

@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.rest.response.CreateCategoryResponse;
 
-public class CategoryResourceTest extends AbstractIntegrationTest{
+public class CategoryResourceIntegrationTest extends AbstractIntegrationTest{
 
 	@Test
 	public void shouldListCategories() throws Exception {
@@ -30,14 +30,14 @@ public class CategoryResourceTest extends AbstractIntegrationTest{
 		final CreateCategoryRequest req1 = new CreateCategoryRequest();
 		req1.setName("Food");
 		final ResponseEntity<String> response = invokeCreateCategoryEndpoint(req1);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 		
 		final CreateCategoryResponse resp1 = readValue(response, CreateCategoryResponse.class);
 		final CreateCategoryRequest req2 = new CreateCategoryRequest();
 		req2.setName("Snack");
 		req2.setParent(resp1.getId());
 		final ResponseEntity<String> response2 = invokeCreateCategoryEndpoint(req2);
-		assertEquals(HttpStatus.OK, response2.getStatusCode());
+		assertEquals(HttpStatus.CREATED, response2.getStatusCode());
 	}
 	
 	@Test
