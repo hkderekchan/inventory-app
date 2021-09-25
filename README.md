@@ -1,6 +1,6 @@
 # inventory-app
 
-Intro
+# Intro
 
 This app supports these features:
 1. providing API(s) for inventory (create, update quantity, list per page & category, delete) & category maintenance (create, list, delete)
@@ -12,7 +12,7 @@ Assumptions
 - categories should be properly set up (eg. Cake should be created under Food, and Shoes should be created under Clothes) before inventory records are created
 - inventory is created under a sub-category, and automatically inherits the category (sub-category's parent is category) information; so, an inventory record should not have inconsistent information like category being "Food" and sub-category being "Shoes"
 - inventory can be navigated page by page (20 records per page, sort by name), with/without sub-category filter
-- category/inventory name is restricted to these characters, expressed in regular expression: [0-9a-zA-Z\\- ]+
+- category/inventory name is restricted to these characters, expressed in regular expression: `[0-9a-zA-Z\\- ]+`
 
 These features would help to construct these workflows, and can be demo from the below Postman requests:
 1. admin create category or sub-category (if a category is selected as parent)
@@ -23,16 +23,17 @@ These features would help to construct these workflows, and can be demo from the
 6. admin can see what inventory are created, without selecting a sub-category; or he can also filter it by selecting a sub-category
 7. admin can update quantity of an inventory
 
-How to run
+# How to run
 1. Git clone the project
 2. Import the project to Spring Tools Suite
-3. Right-click on the project, and then Run as > Spring Boot App
-The app will then run on localhost, port 8080, ie. you can access the API(s) from http://localhost:8080/api/v1/xxxx 
-A set of sample calls are packaged as Postman collection, please import the attach file.
+3. Right-click on the project, and then Run as > Spring Boot App   
+The app will then run on localhost, port 8080, ie. you can access the API(s) from http://localhost:8080/api/v1/xxxx   
+A set of sample calls are packaged as Postman collection, please import the attach file.   
 4. For demo purpose, the app will run on an in-memory db, ie. data will be reset after restart
-5. During the demo, you can check db data from http://localhost:8080/h2-console
+5. During the demo, you can check db data from http://localhost:8080/h2-console , input JDBC URL as `jdbc:h2:mem:mydb`
+![image](https://user-images.githubusercontent.com/6152741/134753900-3be44cd3-0183-4bc1-b4c8-7ca77b51b305.png)
 
-Attachments
-Postman collection
-Sample request/response json files
 
+# Attachments   
+[Postman collection](https://github.com/hkderekchan/inventory-app/blob/main/inventory-app%20demo.postman_collection.json)   
+[Sample request/response json files](https://github.com/hkderekchan/inventory-app/blob/main/sample%20jsons.zip)   
