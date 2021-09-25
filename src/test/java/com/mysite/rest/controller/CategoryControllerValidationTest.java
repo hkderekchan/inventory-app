@@ -22,18 +22,18 @@ public class CategoryControllerValidationTest extends AbstractValidationTest {
 	@Test
 	public void createCategoryValidation() throws Exception {
 		
-		final MockHttpServletRequestBuilder req = post("/api/v1/categories")
+		final MockHttpServletRequestBuilder reqBldr = post("/api/v1/categories")
 				.content(mapper.writeValueAsString(new CreateCategoryRequest()))
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req);		
+		assertBadRequest(reqBldr);		
 	}
 	
 	@Test
 	public void deleteCategoryValidation() throws Exception {
 
-		final MockHttpServletRequestBuilder req = delete("/api/v1/categories/0")
+		final MockHttpServletRequestBuilder reqBldr = delete("/api/v1/categories/0")
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req);		
+		assertBadRequest(reqBldr);		
 	}
 	
 }

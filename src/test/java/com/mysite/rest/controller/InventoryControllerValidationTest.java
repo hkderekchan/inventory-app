@@ -25,46 +25,46 @@ public class InventoryControllerValidationTest extends AbstractValidationTest {
 	@Test
 	public void createInventoryValidation() throws Exception {
 		
-		final MockHttpServletRequestBuilder req = post("/api/v1/inventory")
+		final MockHttpServletRequestBuilder reqBldr = post("/api/v1/inventory")
 				.content(mapper.writeValueAsString(new CreateInventoryRequest()))
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req);		
+		assertBadRequest(reqBldr);		
 	}
 	
 	@Test
 	public void listInventoryValidation() throws Exception {
 		
-		final MockHttpServletRequestBuilder req1 = get("/api/v1/inventory?pageIndex=a")
+		final MockHttpServletRequestBuilder reqBldr1 = get("/api/v1/inventory?pageIndex=a")
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req1);
+		assertBadRequest(reqBldr1);
 		
-		final MockHttpServletRequestBuilder req2 = get("/api/v1/inventory?pageIndex=1&categoryId=0")
+		final MockHttpServletRequestBuilder reqBldr2 = get("/api/v1/inventory?pageIndex=1&categoryId=0")
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req2);
+		assertBadRequest(reqBldr2);
 	}
 	
 	@Test
 	public void updateInventoryValidation() throws Exception {
 		
 		final UpdateInventoryRequest updtReq = new UpdateInventoryRequest();
-		final MockHttpServletRequestBuilder req1 = patch("/api/v1/inventory/1")
+		final MockHttpServletRequestBuilder reqBldr1 = patch("/api/v1/inventory/1")
 				.content(mapper.writeValueAsString(updtReq))
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req1);
+		assertBadRequest(reqBldr1);
 		
 		updtReq.setQuantity(15);
-		final MockHttpServletRequestBuilder req2 = patch("/api/v1/inventory/0")
+		final MockHttpServletRequestBuilder reqBldr2 = patch("/api/v1/inventory/0")
 				.content(mapper.writeValueAsString(updtReq))
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req2);
+		assertBadRequest(reqBldr2);
 	}
 	
 	@Test
 	public void deleteInventoryValidation() throws Exception {
 
-		final MockHttpServletRequestBuilder req = delete("/api/v1/inventory/0")
+		final MockHttpServletRequestBuilder reqBldr = delete("/api/v1/inventory/0")
 				.contentType(MediaType.APPLICATION_JSON);
-		assertBadRequest(req);		
+		assertBadRequest(reqBldr);		
 	}
 	
 }

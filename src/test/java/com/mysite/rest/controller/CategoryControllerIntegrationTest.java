@@ -18,10 +18,10 @@ public class CategoryControllerIntegrationTest extends AbstractIntegrationTest{
 	public void shouldListCategories() throws Exception {
 
 		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		final ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/v1/categories"), HttpMethod.GET,
+		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/categories"), HttpMethod.GET,
 				entity, String.class);
 		final String categories = read("get-categories-resp.json");
-		JSONAssert.assertEquals(categories, response.getBody(), false);
+		JSONAssert.assertEquals(categories, responseEntity.getBody(), false);
 	}
 
 	@Test
@@ -29,15 +29,15 @@ public class CategoryControllerIntegrationTest extends AbstractIntegrationTest{
 
 		final CreateCategoryRequest req1 = new CreateCategoryRequest();
 		req1.setName("Food");
-		final ResponseEntity<String> response = invokeCreateCategoryEndpoint(req1);
-		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		final ResponseEntity<String> responseEntity1 = invokeCreateCategoryEndpoint(req1);
+		assertEquals(HttpStatus.CREATED, responseEntity1.getStatusCode());
 		
-		final CreateCategoryResponse resp1 = readValue(response, CreateCategoryResponse.class);
+		final CreateCategoryResponse resp1 = readValue(responseEntity1, CreateCategoryResponse.class);
 		final CreateCategoryRequest req2 = new CreateCategoryRequest();
 		req2.setName("Snack");
 		req2.setParent(resp1.getId());
-		final ResponseEntity<String> response2 = invokeCreateCategoryEndpoint(req2);
-		assertEquals(HttpStatus.CREATED, response2.getStatusCode());
+		final ResponseEntity<String> responseEntity2 = invokeCreateCategoryEndpoint(req2);
+		assertEquals(HttpStatus.CREATED, responseEntity2.getStatusCode());
 	}
 	
 	@Test

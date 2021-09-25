@@ -34,9 +34,9 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 		final UpdateInventoryRequest req = new UpdateInventoryRequest();
 		req.setQuantity(88);
 		final HttpEntity<UpdateInventoryRequest> entity = new HttpEntity<UpdateInventoryRequest>(req, headers);
-		final ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/v1/inventory/1"),
+		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/inventory/1"),
 				HttpMethod.PATCH, entity, String.class);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		
 		final String expected = read("get-inventory-resp-after-update.json");
 		JSONAssert.assertEquals(expected, getInventoryList(), false);
@@ -47,8 +47,8 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 	public void shouldCreateInventory() throws Exception {
 
 		final CreateInventoryRequest req = inventory("Ice-cream", 5, 2, 3);
-		final ResponseEntity<String> resp = invokeCreateInventoryEndpoint(req);
-		assertEquals(HttpStatus.CREATED, resp.getStatusCode());
+		final ResponseEntity<String> responseEntity = invokeCreateInventoryEndpoint(req);
+		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		
 		final String inventory = getInventoryList();
 		assertTrue(inventory.contains(req.getName()));
@@ -59,9 +59,9 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 	public void shouldDeleteInventory() throws Exception {
 
 		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		final ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/v1/inventory/1"),
+		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/inventory/1"),
 				HttpMethod.DELETE, entity, String.class);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		
 		final String expected = "{}";
 		JSONAssert.assertEquals(expected, getInventoryList(), false);
@@ -69,9 +69,9 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 
 	private String getInventoryList() {
 		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		final ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/v1/inventory?pageIndex=0"), HttpMethod.GET,
+		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/inventory?pageIndex=0"), HttpMethod.GET,
 				entity, String.class);
-		return response.getBody();
+		return responseEntity.getBody();
 	}
 
 	private CreateInventoryRequest inventory(final String name, final int quantity, final int categoryId, final int subCategoryId) {
