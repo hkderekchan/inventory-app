@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.rest.response.CreateCategoryResponse;
 
-public class CategoryResourceIntegrationTest extends AbstractIntegrationTest{
+public class CategoryControllerIntegrationTest extends AbstractIntegrationTest{
 
 	@Test
 	public void shouldListCategories() throws Exception {

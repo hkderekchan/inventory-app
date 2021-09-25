@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.exception;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.*;
@@ -20,14 +20,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysite.rest.controller.CategoryResource;
-import com.mysite.rest.controller.InventoryResource;
+import com.mysite.rest.controller.CategoryController;
+import com.mysite.rest.controller.InventoryController;
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.rest.request.CreateInventoryRequest;
 import com.mysite.service.CategoryService;
 import com.mysite.service.InventoryService;
 
-@WebMvcTest({ CategoryResource.class, InventoryResource.class })
+@WebMvcTest({ CategoryController.class, InventoryController.class })
 public class DefaultExceptionHandlerTest {
 
 	@Autowired

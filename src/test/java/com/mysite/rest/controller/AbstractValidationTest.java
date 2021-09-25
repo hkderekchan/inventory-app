@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

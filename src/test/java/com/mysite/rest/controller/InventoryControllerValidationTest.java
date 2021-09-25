@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,13 +11,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.mysite.rest.controller.InventoryResource;
+import com.mysite.rest.controller.InventoryController;
 import com.mysite.rest.request.CreateInventoryRequest;
 import com.mysite.rest.request.UpdateInventoryRequest;
 import com.mysite.service.InventoryService;
 
-@WebMvcTest({ InventoryResource.class })
-public class InventoryResourceValidationTest extends AbstractValidationTest {
+@WebMvcTest({ InventoryController.class })
+public class InventoryControllerValidationTest extends AbstractValidationTest {
 
 	@MockBean
 	private InventoryService inventoryService;

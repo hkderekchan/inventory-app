@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import java.io.File;
 import java.io.IOException;

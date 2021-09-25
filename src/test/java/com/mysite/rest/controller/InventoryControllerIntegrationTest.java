@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,7 +17,7 @@ import com.mysite.rest.request.CreateInventoryRequest;
 import com.mysite.rest.request.UpdateInventoryRequest;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class InventoryResourceIntegrationTest extends AbstractIntegrationTest{
+public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 
 	@Test
 	@Order(1)

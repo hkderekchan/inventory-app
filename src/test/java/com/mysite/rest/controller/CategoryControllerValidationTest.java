@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -9,12 +9,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.mysite.rest.controller.CategoryResource;
+import com.mysite.rest.controller.CategoryController;
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.service.CategoryService;
 
-@WebMvcTest({ CategoryResource.class })
-public class CategoryResourceValidationTest extends AbstractValidationTest {
+@WebMvcTest({ CategoryController.class })
+public class CategoryControllerValidationTest extends AbstractValidationTest {
 
 	@MockBean
 	private CategoryService categoryService;

@@ -26,7 +26,7 @@ import com.mysite.service.CategoryService;
 	"/api/v1"
 })
 @Validated
-public class CategoryResource {
+public class CategoryController {
 
 	@Autowired
 	private CategoryService service;

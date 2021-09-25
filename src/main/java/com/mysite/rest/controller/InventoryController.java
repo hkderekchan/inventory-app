@@ -31,7 +31,7 @@ import com.mysite.service.InventoryService;
 	"/api/v1"
 })
 @Validated
-public class InventoryResource {
+public class InventoryController {
 
 	@Autowired
 	private InventoryService service;
