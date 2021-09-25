@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.mysite.Constants;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +16,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateInventoryRequest {
 
-	@Pattern(regexp = "[0-9a-zA-Z\\- ]+")
+	@Pattern(regexp = Constants.NAME_PATTERN)
 	@NotBlank
 	private String name;
+	
+	@PositiveOrZero
+	@NotNull
+	private Integer quantity;
 
 	@PositiveOrZero
 	@NotNull
@@ -25,9 +31,5 @@ public class CreateInventoryRequest {
 	@PositiveOrZero
 	@NotNull
 	private Integer subCategoryId;
-
-	@PositiveOrZero
-	@NotNull
-	private Integer quantity;
 	
 }

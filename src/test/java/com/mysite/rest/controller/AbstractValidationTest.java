@@ -18,5 +18,9 @@ abstract class AbstractValidationTest {
 	protected void assertBadRequest(final MockHttpServletRequestBuilder req) throws Exception {
 		this.mockMvc.perform(req).andExpect(status().isBadRequest());
 	}
+
+	protected void assertResponseStatus(final MockHttpServletRequestBuilder req, final int expected) throws Exception {
+		this.mockMvc.perform(req).andExpect(status().is(expected));
+	}
 	
 }

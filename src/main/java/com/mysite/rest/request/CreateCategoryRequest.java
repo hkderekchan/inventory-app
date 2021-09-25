@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.mysite.Constants;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateCategoryRequest {
 
-	@Pattern(regexp = "[0-9a-zA-Z\\- ]+")
+	@Pattern(regexp = Constants.NAME_PATTERN)
 	@NotBlank
 	private String name;
 

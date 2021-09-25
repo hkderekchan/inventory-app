@@ -46,7 +46,7 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 	@Order(3)
 	public void shouldCreateInventory() throws Exception {
 
-		final CreateInventoryRequest req = inventory("Ice-cream", 5, 2, 3);
+		final CreateInventoryRequest req = createInventoryReq("Ice-cream", 5, 2, 3);
 		final ResponseEntity<String> responseEntity = invokeCreateInventoryEndpoint(req);
 		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		
@@ -74,7 +74,7 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 		return responseEntity.getBody();
 	}
 
-	private CreateInventoryRequest inventory(final String name, final int quantity, final int categoryId, final int subCategoryId) {
+	private CreateInventoryRequest createInventoryReq(final String name, final int quantity, final int categoryId, final int subCategoryId) {
 		final CreateInventoryRequest req = new CreateInventoryRequest();
 		req.setName(name);
 		req.setQuantity(quantity);

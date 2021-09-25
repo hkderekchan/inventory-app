@@ -17,6 +17,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mysite.Constants;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ public class Inventory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Pattern(regexp = "[0-9a-zA-Z\\- ]+")
+	@Pattern(regexp = Constants.NAME_PATTERN)
 	@NotBlank
 	@Column(nullable = false, length = 255)
 	private String name;

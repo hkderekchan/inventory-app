@@ -20,6 +20,7 @@ import org.hibernate.annotations.FetchMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.mysite.Constants;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,7 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Pattern(regexp = "[0-9a-zA-Z\\- ]+")
+	@Pattern(regexp = Constants.NAME_PATTERN)
 	@NotBlank
 	@Column(nullable = false, length = 255)
 	private String name;
