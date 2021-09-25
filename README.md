@@ -25,6 +25,7 @@ How to run
 1. Git clone the project
 2. Import the project to Spring Tools Suite / Eclipse
 3. Right-click on the project, and then Run as > Spring Boot App
-
 The app will then run on localhost, port 8080, ie. you can access the API(s) from http://localhost:8080/api/v1/xxxx 
 A set of sample calls are packaged as Postman collection, please import the attach file.
+4. For demo purpose, the app will run on an in-memory db, ie. data will be reset after restart
+5. During the demo, you can check db data from http://localhost:8080/h2-console
