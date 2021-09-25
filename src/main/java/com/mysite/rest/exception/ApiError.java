@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

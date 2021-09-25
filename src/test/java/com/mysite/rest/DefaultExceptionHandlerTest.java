@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysite.rest.controller.CategoryResource;
+import com.mysite.rest.controller.InventoryResource;
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.rest.request.CreateInventoryRequest;
 import com.mysite.service.CategoryService;

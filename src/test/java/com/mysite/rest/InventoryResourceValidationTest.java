@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import com.mysite.rest.controller.InventoryResource;
 import com.mysite.rest.request.CreateInventoryRequest;
 import com.mysite.rest.request.UpdateInventoryRequest;
 import com.mysite.service.InventoryService;

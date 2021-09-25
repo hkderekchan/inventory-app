@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import com.mysite.rest.controller.CategoryResource;
 import com.mysite.rest.request.CreateCategoryRequest;
 import com.mysite.service.CategoryService;
 

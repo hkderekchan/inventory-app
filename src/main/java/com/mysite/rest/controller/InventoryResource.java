@@ -1,4 +1,4 @@
-package com.mysite.rest;
+package com.mysite.rest.controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
