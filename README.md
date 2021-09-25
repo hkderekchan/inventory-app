@@ -30,7 +30,9 @@ These features would help to construct these workflows, and can be demo from the
 The app will then run on localhost, port 8080, ie. you can access the API(s) from http://localhost:8080/api/v1/xxxx   
 A set of sample calls are packaged as Postman collection, please import the attach file.   
 4. For demo purpose, the app will run on an in-memory db, ie. data will be reset after restart
-5. During the demo, you can check db data from http://localhost:8080/h2-console
+5. During the demo, you can check db data from http://localhost:8080/h2-console , input JDBC URL as `jdbc:h2:mem:mydb`
+![image](https://user-images.githubusercontent.com/6152741/134753900-3be44cd3-0183-4bc1-b4c8-7ca77b51b305.png)
+
 
 # Attachments   
 [Postman collection](https://github.com/hkderekchan/inventory-app/blob/main/inventory-app%20demo.postman_collection.json)   
