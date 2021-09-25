@@ -53,7 +53,6 @@ public class InventoryService {
 		if (req == null) {
 			throw new ValidationException("missing inventory details");
 		}
-		// TODO add assumption to README for this valid characters
 		this.validateInventoryCategory(req.getCategoryId());
 		this.validateInventoryCategory(req.getSubCategoryId());
 		final Optional<Category> subCategory = this.categoryRepository
@@ -73,8 +72,6 @@ public class InventoryService {
 	@Cacheable("inventory")
 	public Page<Inventory> listInventory(final int pageIndex,
 			final Integer categoryId) {
-		// TODO add to README for sortBy & pageIndex, and default page size
-		// TODO dont need to prefetch category name, coz ui should get these reference data, add test for this
 		final Pageable paging = PageRequest.of(pageIndex, DEFAULT_PAGESIZE,
 				Sort.by("name", "id"));
 		return this.inventoryRepository.findByCategory(

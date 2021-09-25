@@ -53,8 +53,6 @@ public class CategoryService {
 	@Cacheable("categories")
 	// return list of top level categories, and having the whole category tree initialized
 	public List<Category> groupCategories() {
-		// TODO add assumption, wont be more than a hundred for all levels
-
 		// fetch all categories and build the tree programmatically, instead of relying on JPA to fetch the children;
 		// this is to avoid issuing multiple queries to db, that should be even slower
 		final List<Category> categories = this.categoryRepository

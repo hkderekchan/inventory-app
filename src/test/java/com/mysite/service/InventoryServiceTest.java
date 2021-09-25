@@ -30,7 +30,6 @@ import com.mysite.repository.CategoryRepository;
 import com.mysite.repository.InventoryRepository;
 import com.mysite.rest.request.CreateInventoryRequest;
 
-// TODO check test coverage
 @ExtendWith(SpringExtension.class)
 public class InventoryServiceTest {
 
