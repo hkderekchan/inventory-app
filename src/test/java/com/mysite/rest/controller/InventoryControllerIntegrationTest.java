@@ -24,7 +24,7 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 	public void shouldListInventory() throws Exception {
 
 		final String expected = read("get-inventory-resp.json");
-		JSONAssert.assertEquals(expected, getInventoryList(), false);
+		JSONAssert.assertEquals(expected, getInventoryList(), true);
 	}
 
 	@Test
@@ -39,11 +39,25 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		
 		final String expected = read("get-inventory-resp-after-update.json");
-		JSONAssert.assertEquals(expected, getInventoryList(), false);
+		JSONAssert.assertEquals(expected, getInventoryList(), true);
 	}
 
 	@Test
 	@Order(3)
+	public void shouldDeleteInventory() throws Exception {
+
+		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/inventory/1"),
+				HttpMethod.DELETE, entity, String.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		
+		final String expected = read("get-inventory-resp-after-delete.json");
+		final String actual = getInventoryList();
+		JSONAssert.assertEquals(expected, actual, true);
+	}
+	
+	@Test
+	@Order(4)
 	public void shouldCreateInventory() throws Exception {
 
 		final CreateInventoryRequest req = createInventoryReq("Ice-cream", 5, 2, 3);
@@ -52,19 +66,6 @@ public class InventoryControllerIntegrationTest extends AbstractIntegrationTest{
 		
 		final String inventory = getInventoryList();
 		assertTrue(inventory.contains(req.getName()));
-	}
-
-	@Test
-	@Order(4)
-	public void shouldDeleteInventory() throws Exception {
-
-		final HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/inventory/1"),
-				HttpMethod.DELETE, entity, String.class);
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-		
-		final String expected = "{}";
-		JSONAssert.assertEquals(expected, getInventoryList(), false);
 	}
 
 	private String getInventoryList() {

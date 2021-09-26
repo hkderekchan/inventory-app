@@ -21,7 +21,7 @@ public class CategoryControllerIntegrationTest extends AbstractIntegrationTest{
 		final ResponseEntity<String> responseEntity = restTemplate.exchange(createURLWithPort("/api/v1/categories"), HttpMethod.GET,
 				entity, String.class);
 		final String categories = read("get-categories-resp.json");
-		JSONAssert.assertEquals(categories, responseEntity.getBody(), false);
+		JSONAssert.assertEquals(categories, responseEntity.getBody(), true);
 	}
 
 	@Test
