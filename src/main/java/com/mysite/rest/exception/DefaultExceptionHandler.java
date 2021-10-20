@@ -24,7 +24,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
 			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
 		}
-		final ApiError apiError = new ApiError("api.error", ex.toString());
+		final var apiError = new ApiError("api.error", ex.toString());
 		return new ResponseEntity<>(apiError, headers, status);
 	}
 	

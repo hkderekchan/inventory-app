@@ -39,7 +39,7 @@ public class InventoryController {
 	@PostMapping("/inventory")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CreateInventoryResponse createInventory(@Valid @RequestBody final CreateInventoryRequest req) {
-		final long id = service.createInventory(req);
+		final var id = service.createInventory(req);
 		return new CreateInventoryResponse(id);
 	}
 	

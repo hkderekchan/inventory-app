@@ -1,11 +1,8 @@
 package com.mysite.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.validation.ValidationException;
 
@@ -33,16 +30,16 @@ public class CategoryService {
 		if(req == null){
 			throw new ValidationException("missing category");
 		}
-		final Category category = convertToEntity(req);
+		final var category = convertToEntity(req);
 		return this.categoryRepository.save(category).getId();
 	}
 
 	private Category convertToEntity(final CreateCategoryRequest req) {
-		final Category category = new Category();
+		final var category = new Category();
 		category.setName(req.getName());
-		final Integer parentId = req.getParent();
+		final var parentId = req.getParent();
 		if(parentId != null) {
-			final Category parent = new Category();
+			final var parent = new Category();
 			parent.setId(parentId);
 			category.setParent(parent);
 		}
@@ -55,13 +52,13 @@ public class CategoryService {
 	public List<Category> groupCategories() {
 		// fetch all categories and build the tree programmatically, instead of relying on JPA to fetch the children;
 		// this is to avoid issuing multiple queries to db, that should be even slower
-		final List<Category> categories = this.categoryRepository
+		final var categories = this.categoryRepository
 				.findAll(Sort.by("name"));
-		final List<Category> topLevelCategories = new ArrayList<>(
+		final var topLevelCategories = new ArrayList<Category>(
 				categories.size() / 2);
 		// index the categories in map
-		final Map<Integer, Category> categoryMap = new HashMap<>();
-		final LinkedListMultimap<Integer, Category> subCategoryMap = LinkedListMultimap.create();
+		final var categoryMap = new HashMap<Integer, Category>();
+		final var subCategoryMap = LinkedListMultimap.<Integer, Category>create();
 		for (final Category category : categories) {
 			categoryMap.put(category.getId(), category);
 			if (category.getParent() != null) {
@@ -71,7 +68,7 @@ public class CategoryService {
 			}
 		}
 		// build the relationship
-		for (final Entry<Integer,Collection<Category>> entry : subCategoryMap.asMap().entrySet()) {
+		for (final var entry : subCategoryMap.asMap().entrySet()) {
 			categoryMap.get(entry.getKey()).setSubCategories(entry.getValue());
 		}
 		return topLevelCategories;

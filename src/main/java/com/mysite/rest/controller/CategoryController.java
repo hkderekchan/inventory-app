@@ -34,7 +34,7 @@ public class CategoryController {
 	@PostMapping("/categories")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CreateCategoryResponse createCategory(@Valid @RequestBody final CreateCategoryRequest req) {
-		final int id = service.createCategory(req);
+		final var id = service.createCategory(req);
 		return new CreateCategoryResponse(id);
 	}
 	

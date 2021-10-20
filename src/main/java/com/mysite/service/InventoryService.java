@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,15 +34,15 @@ public class InventoryService {
 	@CacheEvict(value = "inventory", allEntries = true)
 	public long createInventory(final CreateInventoryRequest req) {
 		this.validateCreateInventoryInputs(req);
-		final Inventory inventory = convertToEntity(req);
+		final var inventory = convertToEntity(req);
 		return this.inventoryRepository.save(inventory).getId();
 	}
 
 	private Inventory convertToEntity(final CreateInventoryRequest req) {
-		final Inventory inventory = new Inventory();
+		final var inventory = new Inventory();
 		inventory.setName(req.getName());
 		inventory.setQuantity(req.getQuantity());
-		final Category subCategory = new Category();
+		final var subCategory = new Category();
 		subCategory.setId(req.getSubCategoryId());
 		inventory.setSubCategory(subCategory);
 		return inventory;
@@ -72,7 +71,7 @@ public class InventoryService {
 	@Cacheable("inventory")
 	public Page<Inventory> listInventory(final int pageIndex,
 			final Integer categoryId) {
-		final Pageable paging = PageRequest.of(pageIndex, DEFAULT_PAGESIZE,
+		final var paging = PageRequest.of(pageIndex, DEFAULT_PAGESIZE,
 				Sort.by("name", "id"));
 		return this.inventoryRepository.findByCategory(
 				categoryId == null ? 0 : categoryId, paging);
@@ -85,12 +84,12 @@ public class InventoryService {
 		if (inventoryId <= 0) {
 			throw new ValidationException("invalid inventory");
 		}
-		final Optional<Inventory> inventory = this.inventoryRepository
+		final var inventory = this.inventoryRepository
 				.findById(inventoryId);
 		if (!inventory.isPresent()) {
 			throw new ValidationException("inventory not exist");
 		}
-		final Inventory update = inventory.get();
+		final var update = inventory.get();
 		update.setQuantity(quantity);
 		this.inventoryRepository.save(update);
 	}

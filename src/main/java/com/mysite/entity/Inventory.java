@@ -49,7 +49,7 @@ public class Inventory {
 	private Integer quantity;
 
 	public Integer getCategoryId() {
-		Category parent = this.getSubCategory().getParent();
+		var parent = this.getSubCategory().getParent();
 		if(parent != null) {
 			return parent.getId();
 		}
